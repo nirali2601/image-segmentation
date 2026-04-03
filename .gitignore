@@ -8,5 +8,32 @@ __pycache__/
 *.pywz
 *.pyzw
 *.pyzwz
-.pyc
+.pyd
 .pth
+
+# Virtual environment
+segmentation-env/
+venv/
+env/
+.env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Model weights (if downloaded separately)
+*.pth
+*.pt
+*.onnx
+
+# Large output files
+output*.jpg
+input*.jpg
+input*.jpeg
