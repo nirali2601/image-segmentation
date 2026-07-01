@@ -1,6 +1,7 @@
 import cv2
 import argparse
 import os
+import sys
 from io import BytesIO
 import base64
 from flask import Flask, request, jsonify
@@ -114,7 +115,8 @@ def run_cli():
     parser.add_argument('--input', type=str, default='image2.jpg', help='Path to input image')
     parser.add_argument('--output', type=str, default='output2.jpg', help='Path to output image')
     parser.add_argument('--threshold', type=float, default=0.5, help='Confidence threshold for detection')
-    args = parser.parse_args()
+    # Parse arguments starting from index 2 to skip 'main.py' and '--cli'
+    args = parser.parse_args(sys.argv[2:])
 
     # Load image
     img = load_image(args.input)
@@ -139,7 +141,6 @@ def run_cli():
     cv2.destroyAllWindows()
 
 if __name__ == "__main__":
-    import sys
     if len(sys.argv) > 1 and sys.argv[1] == '--cli':
         run_cli()
     else:
