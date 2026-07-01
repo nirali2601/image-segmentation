@@ -8,7 +8,7 @@ def load_mask_rcnn():
     Returns:
         model: Pre-trained Mask R-CNN model in evaluation mode.
     """
-    model = maskrcnn_resnet50_fpn(pretrained=True)
+    model = maskrcnn_resnet50_fpn(weights='DEFAULT')
     model.eval()  # Set to evaluation mode
     if torch.cuda.is_available():
         model = model.cuda()
