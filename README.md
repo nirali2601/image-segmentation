@@ -79,17 +79,58 @@ Notes:
 
 ## Usage
 
-The main entry point is [main.py](main.py). Basic usage:
+The application provides both a web API and CLI mode.
+
+### Web API (Default)
+
+Start the web server:
 
 ```bash
-# Run with defaults (looks for image2.jpg in the current directory)
 python main.py
-
-# Specify custom input image, output path, and confidence threshold
-python main.py --input path/to/image.jpg --output result.jpg --threshold 0.6
 ```
 
-### Command-Line Arguments
+The API will be available at `http://localhost:5000`
+
+#### API Endpoints
+
+**GET `/`** - API documentation
+```bash
+curl http://localhost:5000/
+```
+
+**GET `/health`** - Health check
+```bash
+curl http://localhost:5000/health
+```
+
+**POST `/segment`** - Perform image segmentation
+```bash
+curl -F "image=@image.jpg" -F "threshold=0.5" http://localhost:5000/segment
+```
+
+**Parameters:**
+- `image` (required): Image file (JPG, PNG, BMP, etc.)
+- `threshold` (optional): Confidence threshold for detections (0.0-1.0, default: 0.5)
+
+**Response:**
+```json
+{
+  "status": "success",
+  "image": "base64_encoded_image_string",
+  "detections": 5,
+  "threshold": 0.5
+}
+```
+
+### CLI Mode (Local Testing)
+
+For command-line usage:
+
+```bash
+python main.py --cli --input path/to/image.jpg --output result.jpg --threshold 0.6
+```
+
+**Arguments:**
 - `--input` - Path to input image (default: `image2.jpg`)
 - `--output` - Path to save output image (default: `output2.jpg`)
 - `--threshold` - Confidence threshold for detections (default: `0.5`, range: `0.0-1.0`)
@@ -103,15 +144,57 @@ python main.py --input path/to/image.jpg --output result.jpg --threshold 0.6
 6. Overlays segmentation masks and bounding boxes
 7. Saves the output image and displays it in an OpenCV window
 
-## Quick Start Example
+## Deployment
 
-1. Place an image named `image2.jpg` in the repository root directory
-2. Run the segmentation:
+### Heroku Deployment
+
+1. Install the Heroku CLI
+2. Log in to Heroku:
    ```bash
-   python main.py --output output2.jpg
+   heroku login
    ```
-3. The segmented image will be saved as `output2.jpg` and displayed on-screen
-4. Press any key in the OpenCV window to exit
+
+3. Create a Heroku app:
+   ```bash
+   heroku create your-app-name
+   ```
+
+4. Push to Heroku:
+   ```bash
+   git push heroku main
+   ```
+
+5. Check the application:
+   ```bash
+   heroku logs --tail
+   heroku open
+   ```
+
+The app will be available at `https://your-app-name.herokuapp.com`
+
+### Local Testing
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the web server
+python main.py
+
+# Test the API
+curl http://localhost:5000/health
+```
+
+### Docker Deployment
+
+You can also containerize the application for deployment to AWS, Google Cloud, Azure, or any Docker-compatible platform.
+
+## Environment Variables
+
+- `PORT` - Server port (default: 5000)
+- `FLASK_ENV` - Environment mode (default: production)
+
+
 
 ## Troubleshooting
 
