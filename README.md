@@ -146,7 +146,65 @@ python main.py --cli --input path/to/image.jpg --output result.jpg --threshold 0
 
 ## Deployment
 
-### Heroku Deployment
+### ⚠️ Important: Vercel Limitations
+**Note:** Vercel has a 250MB size limit for Python deployments. PyTorch + TorchVision can exceed this limit. If you encounter deployment issues, use **Render** or **Railway** instead (recommended alternatives).
+
+### Vercel Deployment (Recommended for Learning)
+
+1. **Install Vercel CLI:**
+   ```bash
+   npm install -g vercel
+   ```
+
+2. **Deploy to Vercel:**
+   ```bash
+   vercel
+   ```
+
+3. **Follow the prompts:**
+   - Link your Git repository
+   - Confirm project settings
+   - Deploy
+
+4. **Your app will be live at:** `https://your-project.vercel.app`
+
+**Test the API:**
+```bash
+curl https://your-project.vercel.app/health
+curl -F "image=@image.jpg" https://your-project.vercel.app/segment
+```
+
+### Railway Deployment (Recommended Alternative)
+
+Railway works better with Python ML applications due to higher resource limits.
+
+1. **Create account at [railway.app](https://railway.app)**
+
+2. **Install Railway CLI:**
+   ```bash
+   npm install -g @railway/cli
+   ```
+
+3. **Deploy:**
+   ```bash
+   railway login
+   railway init
+   railway up
+   ```
+
+### Render Deployment (Another Great Alternative)
+
+1. **Create account at [render.com](https://render.com)**
+
+2. **Create a new Web Service:**
+   - Connect GitHub repository
+   - Set build command: `pip install -r requirements.txt`
+   - Set start command: `gunicorn main:app`
+   - Choose appropriate plan
+
+3. **Deploy and your app will be live!**
+
+### Heroku Deployment (Still Available)
 
 1. Install the Heroku CLI
 2. Log in to Heroku:
@@ -183,11 +241,17 @@ python main.py
 
 # Test the API
 curl http://localhost:5000/health
+curl -F "image=@image.jpg" http://localhost:5000/segment
 ```
 
 ### Docker Deployment
 
 You can also containerize the application for deployment to AWS, Google Cloud, Azure, or any Docker-compatible platform.
+
+```bash
+docker build -t image-segmentation .
+docker run -p 5000:5000 image-segmentation
+```
 
 ## Environment Variables
 
