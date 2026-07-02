@@ -295,3 +295,5 @@ cd d:\Downloads\project-2\image-segmentation-tool
 
 # Run with your image
 python main.py --cli --input input.jpeg --output output_result.jpg
+
+# image-segmentation
