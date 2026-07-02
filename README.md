@@ -288,3 +288,10 @@ This project is provided as-is for educational and research purposes.
 ## Contributing
 
 Contributions are welcome! Please feel free to submit pull requests or open issues for bugs and feature requests.
+
+
+cd d:\Downloads\project-2\image-segmentation-tool
+.\segmentation-env\Scripts\Activate.ps1
+
+# Run with your image
+python main.py --cli --input input.jpeg --output output_result.jpg
